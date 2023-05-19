@@ -5,9 +5,13 @@
 package projfakenews;
 
 /**
- *
+ *Uma interface para objetos que podem se mover.
  * @author vluca
  */
 public interface IMovable {
+    /**
+     * Move o objeto.
+     * A implementação dessa função deve definir a lógica de movimentação específica para cada objeto.
+     */
     public void mover();
 }

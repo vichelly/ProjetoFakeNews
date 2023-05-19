@@ -2,28 +2,27 @@ package projfakenews;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
+/**
+ * A classe Mundo representa um mundo virtual onde são geradas e destruídas fake news.
+ */
 public class Mundo {
+
+    /**
+     *
+     */
     public int[][] mapa;
-    //private int coluna = 1;
-   private IAGeradoraDeFakeNews Fake; 
-   private IADestruidoraDeFakeNews Destroy;
-   private MeioComunicacaoConfiavel Imunity;
+    private IAGeradoraDeFakeNews Fake; 
+    private IADestruidoraDeFakeNews Destroy;
+    private MeioComunicacaoConfiavel Imunity;
+    /**
+     * Construtor da classe Mundo. Inicializa o mundo chamando o método refazMundo().
+     */
     public void Mundo(){
         refazMundo();
     }
-    
-//    public void atualizaMundo(){
-//        mapa[1][coluna] = 5;
-//        mapa[1][coluna-1] = 0;
-//        coluna++;
-//        if (coluna>29){
-//            coluna=1;
-//        }
-//    }
-    
-    
-    
+    /**
+     * Refaz o mundo, criando um novo mapa.
+     */
     public void refazMundo(){
         
         mapa = new int[][]
@@ -59,6 +58,9 @@ public class Mundo {
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}  
         };
+        /**
+        * Constrói um novo mundo simulado, inicializando as instâncias das classes fake, destroy e imunity.
+        */
         Fake = new IAGeradoraDeFakeNews();
         Destroy = new IADestruidoraDeFakeNews();
         Imunity = new MeioComunicacaoConfiavel();
@@ -69,8 +71,12 @@ public class Mundo {
                 mapa[Imunity.getY()+i][Imunity.getX()+j] = Imunity.getCor();
             }}
     }
-    
+   
+    /**
+     * Gera o mundo simulado, preenchendo o mapa com as instâncias das classes fake, destroy e imunity.
+     */
     public void desenhaMundo(){
+        // Preenche o mapa com as instâncias das classes fake, destroy e imunity
         for(int i = 0; i < mapa.length; i++){
             for(int j = 0; j < mapa[i].length; j++){
                 switch(mapa[i][j]){
@@ -110,10 +116,13 @@ public class Mundo {
         System.out.println();
         System.out.println();
     }
-    
+    /**
+    * Coloca as pessoas no mapa e executa ações com base nas cores do mapa.
+    * @param pessoa A lista de pessoas a serem colocadas no mapa.
+    */
     public void colocaMapa(ArrayList<Pessoa> pessoa){
         int xAtual, yAtual;
-        
+        // Verifica a interação entre as pessoas e adiciona contatos com base nas posições no mapa
         for(int i = 0; i < pessoa.size(); i++){
             for(int j = 0; j < pessoa.size(); j++){
                 if(pessoa.get(i).getX() == pessoa.get(j).getX() &&
@@ -139,11 +148,12 @@ public class Mundo {
                 }
             }
         
-            // coloca pessoa no mapa
+            // coloca pessoa no mapa com base nas cores
         for(int u = 0; u < pessoa.size(); u++){
             xAtual = pessoa.get(u).getX();
             yAtual = pessoa.get(u).getY();
             
+            // caso elas fiquem em cima de um bloco com determinada cor certas funções são ativadas
             switch(mapa[xAtual][yAtual]){
                     case 6 -> {
                         Fake.DisseminaFakeNews(pessoa, pessoa.get(u).getAgendaContatos());
